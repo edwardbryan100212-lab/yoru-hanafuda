@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yoru Hanafuda</title>
+<meta name="description" content="Koi-Koi hanafuda for two, in the browser. Play the house or a friend with a room code.">
+<meta name="theme-color" content="#23251a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 96'%3E%3Crect width='60' height='96' rx='6' fill='%235e1914'/%3E%3Crect x='3' y='3' width='54' height='90' rx='4' fill='%23f3e9d3'/%3E%3Ccircle cx='30' cy='40' r='16' fill='%23c7362b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=3">
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z M16.5 8.5a5 5 0 0 1 0 7 M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z M17 9l5 6 M22 9l-5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5zM12 6v14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14v10H10l-5 4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+</svg>
+
+<!-- Lobby -->
+<main id="lobby" class="screen">
+  <div class="lobby-inner">
+    <div class="title-block">
+      <div class="title-cards" id="titleCards" aria-hidden="true"></div>
+      <h1><span class="jp-title" lang="ja">夜の花札</span><span class="en-title">Yoru Hanafuda</span></h1>
+      <p class="lede">Koi-Koi for two. Match the months, build your hand, then decide: <span lang="ja">こいこい</span> and push your luck, or <span lang="ja">勝負</span> and take the points.</p>
+    </div>
+
+    <div class="lobby-panel" id="lobbyMain">
+      <label class="namefld">
+        <span>Your name</span>
+        <input id="nameInput" maxlength="14" autocomplete="nickname" placeholder="Player">
+      </label>
+      <fieldset class="seg" id="roundsSeg">
+        <legend>Length</legend>
+        <label><input type="radio" name="rounds" value="3"><span><b lang="ja">三ヶ月</b>3 months</span></label>
+        <label><input type="radio" name="rounds" value="6" checked><span><b lang="ja">半年</b>6 months</span></label>
+        <label><input type="radio" name="rounds" value="12"><span><b lang="ja">一年</b>12 months</span></label>
+      </fieldset>
+
+      <div class="modes">
+        <section class="mode">
+          <h2><span lang="ja">胴元</span> Play the house</h2>
+          <p>A quick game against the computer.</p>
+          <div class="row">
+            <select id="cpuLevel" aria-label="Difficulty">
+              <option value="easy">Relaxed</option>
+              <option value="normal" selected>Sharp</option>
+            </select>
+            <button class="btn primary" id="playCpu">Deal the cards</button>
+          </div>
+        </section>
+        <section class="mode">
+          <h2><span lang="ja">対戦</span> Play a friend</h2>
+          <p>Open a room and send the code, or join one.</p>
+          <div class="row">
+            <button class="btn primary" id="hostBtn">Open a room</button>
+          </div>
+          <form class="row" id="joinForm">
+            <input id="codeInput" maxlength="4" placeholder="Code" aria-label="Room code" autocapitalize="characters" spellcheck="false">
+            <button class="btn" type="submit">Join</button>
+          </form>
+        </section>
+      </div>
+      <button class="link-btn" id="guideBtnLobby"><svg><use href="#i-book"/></svg>How to play and yaku list</button>
+    </div>
+
+    <div class="lobby-panel hidden" id="waitPanel">
+      <p class="wait-label" id="waitLabel">Room open. Send this code to your friend.</p>
+      <div class="room-code" id="roomCode">----</div>
+      <div class="row center">
+        <button class="btn" id="copyLink"><svg><use href="#i-link"/></svg>Copy invite link</button>
+        <button class="btn ghost" id="cancelWait">Cancel</button>
+      </div>
+      <p class="hint" id="waitHint">Waiting for them to join<span class="dots"></span></p>
+    </div>
+  </div>
+</main>
+
+<!-- Table -->
+<div id="table" class="screen hidden">
+  <header class="topbar">
+    <button class="icon-btn" id="leaveBtn" aria-label="Leave game"><svg><use href="#i-back"/></svg></button>
+    <div class="round-info" id="roundInfo"></div>
+    <div class="top-actions">
+      <button class="icon-btn" id="hintBtn" aria-label="Toggle match hints" aria-pressed="true"><svg><use href="#i-eye"/></svg></button>
+      <button class="icon-btn" id="guideBtn" aria-label="Yaku list"><svg><use href="#i-book"/></svg></button>
+      <button class="icon-btn" id="soundBtn" aria-label="Sound on"><svg><use href="#i-sound"/></svg></button>
+    </div>
+  </header>
+
+  <section class="side opp" id="oppSide">
+    <div class="player-tag" id="oppTag"></div>
+    <div class="hand opp-hand" id="oppHand"></div>
+    <div class="caps" id="oppCaps"></div>
+  </section>
+
+  <section class="board">
+    <div class="deck" id="deck" aria-label="Draw pile"></div>
+    <div class="field" id="field"></div>
+    <aside class="reach" id="reach"></aside>
+  </section>
+
+  <section class="side me" id="meSide">
+    <div class="caps" id="meCaps"></div>
+    <div class="status" id="status" aria-live="polite"></div>
+    <div class="hand my-hand" id="myHand"></div>
+    <div class="player-tag" id="meTag"></div>
+  </section>
+
+  <div class="emotes" id="emotes">
+    <button class="icon-btn" id="emoteToggle" aria-label="Quick phrases" aria-expanded="false"><svg><use href="#i-chat"/></svg></button>
+    <div class="emote-list hidden" id="emoteList"></div>
+  </div>
+</div>
+
+<!-- Overlays -->
+<div class="banner" id="banner" aria-live="assertive"></div>
+<div class="modal-wrap hidden" id="modalWrap"><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+<div class="toast hidden" id="toast" role="status"></div>
+<div class="tip hidden" id="tip"></div>
+
+<script type="module" src="js/main.js?v=3"></script>
+</body>
+</html>
