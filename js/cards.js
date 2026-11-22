@@ -69,9 +69,10 @@ export function cardSVG(id, { label = true } = {}) {
     + (label ? `<span class="mk" lang="ja" aria-hidden="true">${m.flower}</span>` : '');
 }
 
-export const BACK_SVG = `<img class="art" src="${src('back-yoru')}" alt="" draggable="false" decoding="async">`;
+// Plain backs like a real deck. Players alternate a black and a red deck month by month.
+export const backSVG = (round = 1) => `<img class="art" src="${src(round % 2 ? 'back-black' : 'back-red')}" alt="" draggable="false" decoding="async">`;
 
 // Warm the cache so cards don't pop in on the first deal.
 export function preloadArt() {
-  [...CARDS.map((c) => c.id), 'back-yoru'].forEach((n) => { const i = new Image(); i.src = src(n); });
+  [...CARDS.map((c) => c.id), 'back-black', 'back-red'].forEach((n) => { const i = new Image(); i.src = src(n); });
 }

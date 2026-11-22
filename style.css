@@ -437,3 +437,53 @@ body {
 .en-title { color: #9a6a24; }
 .lobby-panel .link-btn + .link-btn { margin-top: -14px; }
 .jp-title { font-size: clamp(48px, 6.6vw, 92px); white-space: nowrap; }
+
+/* ---------- Clubhouse-style arrangement (desktop): captures on tall side cloths, hands centred ---------- */
+.card.back { box-shadow: 1px 1px 0 rgba(0, 0, 0, .35), 0 3px 6px -2px rgba(40, 25, 10, .4); }
+.deck .card.back { box-shadow: 1px 1px 0 rgba(0, 0, 0, .45), 2px 2px 0 rgba(230, 220, 200, .55), 3px 3px 0 rgba(0, 0, 0, .4), 4px 4px 0 rgba(230, 220, 200, .5), 5px 5px 0 rgba(0, 0, 0, .35), 0 8px 12px -2px rgba(40, 25, 10, .4); }
+.opp-hand .card { width: calc(var(--cw) * .82); height: calc(var(--cw) * .82 * 1.64); margin-left: 0; }
+.opp-hand { gap: calc(var(--cw) * .1); justify-content: center; padding-left: 0; }
+
+@media (min-width: 901px) {
+  #table {
+    grid-template-columns: minmax(210px, 1fr) auto minmax(210px, 1fr);
+    grid-template-rows: auto auto 1fr auto auto;
+    grid-template-areas:
+      "top    top    top"
+      "ocaps  ohand  otag"
+      "ocaps  board  mcaps"
+      "mtag   status mcaps"
+      "mtag   mhand  mcaps";
+    column-gap: 22px;
+  }
+  .side { display: contents; }
+  .topbar { grid-area: top; }
+  #oppCaps { grid-area: ocaps; }
+  #oppHand { grid-area: ohand; justify-self: center; }
+  #oppTag { grid-area: otag; justify-self: end; align-self: start; }
+  .board { grid-area: board; }
+  #meCaps { grid-area: mcaps; }
+  #status { grid-area: status; justify-self: center; }
+  #myHand { grid-area: mhand; justify-self: center; }
+  #meTag { grid-area: mtag; justify-self: start; align-self: end; margin-bottom: 58px; }
+  #oppCaps, #meCaps {
+    display: flex; flex-direction: column; justify-content: flex-start; gap: 10px;
+    min-width: 0; width: 100%; align-self: stretch; align-items: stretch; min-height: 0; overflow: hidden;
+  }
+  #oppCaps { margin-bottom: 8px; }
+  #meCaps { margin-top: 8px; }
+  .cap-group { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 10px; border-bottom: 1px solid rgba(0, 0, 0, .14); padding-bottom: 8px; }
+  .cap-group:last-child { border-bottom: 0; }
+  .cap-group .lbl { order: 2; flex-direction: column; align-items: flex-end; gap: 0; min-width: 2.5em; }
+}
+@media (min-width: 901px) and (max-width: 1279px) {
+  #table { grid-template-columns: minmax(170px, 1fr) auto minmax(170px, 1fr); column-gap: 16px; }
+  .reach { display: none; }
+  .board { grid-template-columns: auto auto; }
+  .field { min-width: calc(var(--cw) * 5 + var(--cw) * .2 * 4); }
+}
+@media (max-width: 640px) {
+  .opp-hand .card { width: calc(var(--cw) * .62); height: calc(var(--cw) * .62 * 1.64); }
+  .opp-hand .card + .card { margin-left: calc(var(--cw) * -.12); }
+  .opp-hand { gap: 0; }
+}

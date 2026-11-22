@@ -1,4 +1,4 @@
-import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG, preloadArt } from './cards.js?v=6';
+import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, backSVG, preloadArt } from './cards.js?v=7';
 import { newMatch, applyAction, viewFor, computeYaku, yakuProgress, matchesIn, YAKU } from './engine.js';
 import { cpuAction } from './ai.js';
 import { play, setSound as setAudio, loadSounds } from './sound.js?v=4';
@@ -101,7 +101,7 @@ function cardEl(id, extra = '') {
   return b;
 }
 function backEl() {
-  const d = el('div', 'card back', BACK_SVG);
+  const d = el('div', 'card back', backSVG(view ? view.round : 1));
   return d;
 }
 

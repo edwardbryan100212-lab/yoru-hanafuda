@@ -8,7 +8,7 @@ figcaption{font-size:11px;margin-top:3px;font-family:'Shippori Mincho B1',serif}
 <h1>花札 四十八枚 <span style="font-family:Zen Kaku Gothic New;font-size:15px;font-weight:400">All 48 cards</span></h1>
 <div class="g" id="g"></div>
 <p>Card art by Louie Mantia, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, colours softened.</p>
-<script type="module">import {CARDS,MONTHS,cardSVG} from './js/cards.js?v=6';
+<script type="module">import {CARDS,MONTHS,cardSVG} from './js/cards.js?v=7';
 const g=document.getElementById('g');
 MONTHS.forEach((m,i)=>{g.insertAdjacentHTML('beforeend',`<div class="m"><b>${m.flower}</b>${m.n}. ${m.en}</div>`);
 for(let j=0;j<4;j++){const c=CARDS[i*4+j];g.insertAdjacentHTML('beforeend',`<figure>${cardSVG(c.id,{label:false})}<figcaption>${c.jp}</figcaption></figure>`)}});</script>

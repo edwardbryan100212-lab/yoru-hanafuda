@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 976 1600">
-  <rect x="8" y="8" width="960" height="1584" rx="40" fill="#b9473a"/>
-  <rect x="56" y="56" width="864" height="1488" rx="22" fill="none" stroke="#f7f0e1" stroke-opacity=".55" stroke-width="10"/>
-  <rect x="84" y="84" width="808" height="1432" rx="14" fill="none" stroke="#f7f0e1" stroke-opacity=".25" stroke-width="4"/>
-  <circle cx="488" cy="800" r="230" fill="none" stroke="#f7f0e1" stroke-opacity=".55" stroke-width="10"/>
-  <text x="488" y="880" font-size="250" text-anchor="middle" fill="#f7f0e1" fill-opacity=".85" font-family="'Hiragino Mincho ProN','Yu Mincho','Shippori Mincho B1',serif" font-weight="700">花</text>
-</svg>

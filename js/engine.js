@@ -1,5 +1,5 @@
 // Koi-Koi rules engine. Pure state + actions, no DOM.
-import { CARDS, ID } from './cards.js?v=6';
+import { CARDS, ID } from './cards.js?v=7';
 
 export const YAKU = {
   goko: { jp: '五光', read: 'Gokō', en: 'Five brights' },
