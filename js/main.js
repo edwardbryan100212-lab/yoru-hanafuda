@@ -1,6 +1,7 @@
 import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG, preloadArt } from './cards.js?v=6';
 import { newMatch, applyAction, viewFor, computeYaku, yakuProgress, matchesIn, YAKU } from './engine.js';
 import { cpuAction } from './ai.js';
+import { play, setSound as setAudio } from './sound.js?v=2';
 import { hostRoom, joinRoom, cleanCode } from './net.js';
 
 const $ = (s) => document.querySelector(s);
@@ -31,34 +32,6 @@ let sound = store.get('sound', true);
 const seen = { call: 0, yaku: 0, seq: 0, phase: '' };
 
 // ---------------- sound ----------------
-let actx = null;
-function clack(kind = 'place') {
-  if (!sound) return;
-  try {
-    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
-    const t = actx.currentTime;
-    const len = kind === 'take' ? 0.09 : 0.05;
-    const buf = actx.createBuffer(1, Math.floor(actx.sampleRate * len), actx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
-    const src = actx.createBufferSource();
-    src.buffer = buf;
-    const bp = actx.createBiquadFilter();
-    bp.type = 'bandpass';
-    bp.frequency.value = kind === 'take' ? 1400 : 2200;
-    bp.Q.value = 1.2;
-    const g = actx.createGain();
-    g.gain.setValueAtTime(kind === 'call' ? 0.9 : 0.55, t);
-    src.connect(bp).connect(g).connect(actx.destination);
-    src.start(t);
-    if (kind === 'call') {
-      const o = actx.createOscillator(); const og = actx.createGain();
-      o.type = 'triangle'; o.frequency.setValueAtTime(330, t); o.frequency.exponentialRampToValueAtTime(220, t + 0.5);
-      og.gain.setValueAtTime(0.18, t); og.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
-      o.connect(og).connect(actx.destination); o.start(t); o.stop(t + 0.6);
-    }
-  } catch { /* audio unavailable */ }
-}
 
 // ---------------- controller ----------------
 function startCpu(rounds, name) {
@@ -258,9 +231,10 @@ function render(v) {
   renderReach(v);
 
   flip(before, v, !prev || prev.seq !== v.seq);
+  if (!prev || prev.seq !== v.seq) play('deal');
 
   // sounds for moves
-  if (prev && v.last && JSON.stringify(prev.last) !== JSON.stringify(v.last)) clack(v.last.taken.length ? 'take' : 'place');
+  if (prev && v.last && JSON.stringify(prev.last) !== JSON.stringify(v.last)) play(v.last.taken.length ? 'take' : 'place');
 
   // events: calls, yaku, end of round
   handleEvents(prev, v);
@@ -354,6 +328,7 @@ function handleEvents(prev, v) {
       const names = v.newYaku.list.map((y) => y.jp).join('　');
       const who = v.newYaku.p === me ? 'Your yaku' : `${v.names[v.newYaku.p]}'s yaku`;
       banner(names, `${who}: ${v.newYaku.total} pts`, 'yaku');
+      play('yaku');
       delay = 1400;
     }
   }
@@ -363,6 +338,7 @@ function handleEvents(prev, v) {
       const who = v.call.p === me ? 'You' : v.names[v.call.p];
       if (v.call.what === 'koikoi') banner('こいこい', `${who} keep${v.call.p === me ? '' : 's'} going`, 'koi');
       else banner('勝負', `${who} stop${v.call.p === me ? '' : 's'} and score${v.call.p === me ? '' : 's'}`, 'shobu');
+      play(v.call.what);
       delay = 1400;
     }
   }
@@ -373,6 +349,9 @@ function handleEvents(prev, v) {
   if (v.phase === 'koikoi' && v.turn === me) {
     pendingModal = setTimeout(() => koiModal(view), delay);
   } else if (v.phase === 'roundEnd' || v.phase === 'gameEnd') {
+    const r = v.result;
+    const tune = v.phase === 'gameEnd' ? 'gameEnd' : !r || r.winner == null ? 'draw-round' : r.winner === me ? 'win' : 'lose';
+    if (!v.ready[me]) setTimeout(() => play(tune), delay);
     pendingModal = setTimeout(() => endModal(view), delay + 300);
   } else if (modalKind === 'koi' || modalKind === 'end') {
     closeModal();
@@ -383,7 +362,6 @@ let bannerTimer = null;
 function banner(text, sub, cls) {
   const b = $('#banner');
   b.innerHTML = `<div class="call ${cls}" lang="ja">${esc(text)}<small lang="en">${esc(sub)}</small></div>`;
-  clack('call');
   clearTimeout(bannerTimer);
   bannerTimer = setTimeout(() => (b.innerHTML = ''), 1550);
 }
@@ -701,7 +679,8 @@ function initLobby() {
   const sb = $('#soundBtn');
   const setSound = () => { sb.innerHTML = `<svg><use href="#i-${sound ? 'sound' : 'mute'}"/></svg>`; sb.setAttribute('aria-label', sound ? 'Sound on' : 'Sound off'); };
   setSound();
-  sb.addEventListener('click', () => { sound = !sound; store.set('sound', sound); setSound(); });
+  setAudio(sound);
+  sb.addEventListener('click', () => { sound = !sound; store.set('sound', sound); setAudio(sound); setSound(); });
 
   const list = $('#emoteList');
   EMOTES.forEach(([jp, en], i) => {
@@ -731,4 +710,4 @@ initLobby();
 preloadArt();
 
 // test hook
-window.__yh = { get state() { return state; }, get view() { return view; }, act, send, load: (s) => commit(s) };
+window.__yh = { play, get state() { return state; }, get view() { return view; }, act, send, load: (s) => commit(s) };

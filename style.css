@@ -332,3 +332,66 @@ svg { display: block; }
 
 .credit { margin: -8px 0 0; font-size: 12px; color: var(--ink-soft); }
 .credit a { color: inherit; }
+
+/* ---------- traditional room: tatami floor, red felt, woven mat ---------- */
+:root {
+  --tatami: #c3be8a;
+  --tatami-dark: #aaa673;
+  --heri: #3f4b3c;
+  --felt: #ad3b3b;
+  --felt-deep: #8e2f31;
+  --sakura-mon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='%23ffd9d4' fill-opacity='.16'%3E%3Cg transform='translate%2834 38%29 scale%281.1%29'%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%280%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%2872%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28144%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28216%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28288%29'/%3E%3C/g%3E%3Cg transform='translate%28104 100%29 scale%280.75%29'%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%280%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%2872%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28144%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28216%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28288%29'/%3E%3C/g%3E%3Cg transform='translate%28110 28%29 scale%280.5%29'%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%280%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%2872%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28144%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28216%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28288%29'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+body {
+  background-color: var(--tatami);
+  background-image:
+    radial-gradient(ellipse 75% 65% at 50% 45%, rgba(255, 248, 215, .32), transparent 72%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(70, 60, 20, .22)),
+    repeating-linear-gradient(180deg, transparent 0 262px, rgba(0, 0, 0, .18) 262px 263px, var(--heri) 263px 271px, rgba(255, 255, 255, .12) 271px 272px),
+    repeating-linear-gradient(180deg, rgba(110, 100, 40, .13) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(110, 100, 40, .05) 0 1px, transparent 1px 26px),
+    linear-gradient(100deg, #c9c592, #bcb782 50%, #c6c08b);
+}
+
+/* field: woven rug with fringed ends */
+.board {
+  position: relative;
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(0deg, rgba(120, 60, 50, .07) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .08) 0 1px, transparent 1px 3px),
+    linear-gradient(125deg, #e7b9b2 0%, #e9c4ac 45%, #e3cf98 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .35) inset, 0 14px 28px -14px rgba(60, 45, 20, .55);
+  margin: 0 14px;
+}
+.board::before, .board::after {
+  content: ''; position: absolute; top: 4px; bottom: 4px; width: 12px; pointer-events: none;
+  background: repeating-linear-gradient(180deg, #ecd9c6 0 2px, transparent 2px 4px);
+}
+.board::before { left: -11px; }
+.board::after { right: -11px; }
+.deck .count { color: var(--ink-soft); }
+.reach { background: rgba(255, 250, 242, .82); }
+
+/* captured cards sit on red felt (hi-mōsen) */
+.side .caps {
+  background: var(--sakura-mon), radial-gradient(ellipse at 30% 20%, var(--felt), var(--felt-deep));
+  border-radius: 8px; padding: 8px 14px 10px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12), 0 8px 18px -10px rgba(60, 20, 10, .55);
+}
+.side .caps:empty::before { content: '取り札'; font-family: var(--font-jp); font-size: 13px; color: rgba(255, 230, 225, .55); align-self: center; }
+.cap-group .lbl { color: rgba(255, 240, 235, .85); }
+.cap-group .lbl em { color: #f6d68c; }
+
+/* labels on the floor get small dark pills, like scoreboards */
+.player-tag, .round-info, .status:not(:empty) {
+  background: rgba(45, 38, 28, .62); color: #fbf4e4; border-radius: 999px; padding: 4px 12px;
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+}
+.player-tag { justify-self: start; }
+.me .player-tag { justify-self: center; }
+.player-tag .pts small, .round-info { color: rgba(251, 244, 228, .7); }
+.round-info .month { color: #fbf4e4; }
+.status:not(:empty) { color: rgba(251, 244, 228, .85); width: fit-content; justify-self: center; }
+.status [lang="ja"] { color: #f6d68c; }
+.badge { box-shadow: none; }
