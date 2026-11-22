@@ -346,10 +346,9 @@ export function cardSVG(id, { label = true } = {}) {
     ? `<g class="lbl"><rect x="3.2" y="3.2" width="${m.flower.length > 1 ? 15 : 9}" height="9" rx="1.6" fill="${W}" fill-opacity=".9" stroke="${K}" stroke-width=".4"/><text x="${m.flower.length > 1 ? 10.7 : 7.7}" y="10.2" font-size="6.4" text-anchor="middle" fill="${K}" font-family="'Shippori Mincho B1',serif" font-weight="700">${m.flower}</text></g>`
     : '';
   const svg = `<svg viewBox="0 0 60 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${c.jp}, ${c.en}">
-    <defs><clipPath id="cp${id}"><rect x="2" y="2" width="56" height="92" rx="2.4"/></clipPath></defs>
     <rect x="0" y="0" width="60" height="96" rx="3.6" fill="#5e1914"/>
     <rect x="2" y="2" width="56" height="92" rx="2.4" fill="${CR}"/>
-    <g clip-path="url(#cp${id})">${art}</g>${tag}</svg>`;
+    <svg x="2" y="2" width="56" height="92" viewBox="2 2 56 92" overflow="hidden">${art}</svg>${tag}</svg>`;
   cache.set(key, svg);
   return svg;
 }

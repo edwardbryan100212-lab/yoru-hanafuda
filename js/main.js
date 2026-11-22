@@ -1,4 +1,4 @@
-import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG } from './cards.js';
+import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG } from './cards.js?v=4';
 import { newMatch, applyAction, viewFor, computeYaku, yakuProgress, matchesIn, YAKU } from './engine.js';
 import { cpuAction } from './ai.js';
 import { hostRoom, joinRoom, cleanCode } from './net.js';
