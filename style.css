@@ -295,7 +295,11 @@ svg { display: block; }
   .title-cards .tc { width: 56px; }
   .lede { margin-bottom: 0; }
 }
-@media (max-width: 900px), (max-height: 560px) {
+@media (max-height: 780px) {
+  .reach { gap: 2px; font-size: 12px; }
+  .reach .now { display: none; }
+}
+@media (max-width: 900px), (max-height: 640px) {
   .reach { display: none; }
   .board { grid-template-columns: auto 1fr; padding: 10px; gap: 10px; }
 }
