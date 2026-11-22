@@ -1,7 +1,7 @@
 import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG, preloadArt } from './cards.js?v=6';
 import { newMatch, applyAction, viewFor, computeYaku, yakuProgress, matchesIn, YAKU } from './engine.js';
 import { cpuAction } from './ai.js';
-import { play, setSound as setAudio } from './sound.js?v=2';
+import { play, setSound as setAudio, loadSounds } from './sound.js?v=4';
 import { hostRoom, joinRoom, cleanCode } from './net.js';
 
 const $ = (s) => document.querySelector(s);
@@ -234,7 +234,7 @@ function render(v) {
   if (!prev || prev.seq !== v.seq) play('deal');
 
   // sounds for moves
-  if (prev && v.last && JSON.stringify(prev.last) !== JSON.stringify(v.last)) play(v.last.taken.length ? 'take' : 'place');
+  if (prev && v.last && JSON.stringify(prev.last) !== JSON.stringify(v.last)) { const k = v.last.taken.length ? 'take' : 'place'; if (v.last.from === 'deck') { play('draw'); setTimeout(() => play(k), 160); } else play(k); }
 
   // events: calls, yaku, end of round
   handleEvents(prev, v);
@@ -708,6 +708,7 @@ function initLobby() {
 
 initLobby();
 preloadArt();
+document.addEventListener('pointerdown', () => { if (sound) loadSounds(); }, { once: true });
 
 // test hook
 window.__yh = { play, get state() { return state; }, get view() { return view; }, act, send, load: (s) => commit(s) };

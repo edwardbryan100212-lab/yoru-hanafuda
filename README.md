@@ -15,3 +15,5 @@ No build step. Serve the folder with any static server, for example:
 ## Credits
 
 Card art: the traditional-colour (red border) hanafuda set by Louie Mantia on Wikimedia Commons, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Colours were softened and reds lightened by `tools/soften.py`; the changed card files in `cards/` are shared under the same licence.
+
+Sounds: card, kotsuzumi, hyōshigi and taiko recordings from [効果音ラボ](https://soundeffect-lab.info/) (free, built into the game under their terms). Shamisen notes from the FluidR3 GM soundfont via [midi-js-soundfonts](https://github.com/gleitz/midi-js-soundfonts), licensed [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).

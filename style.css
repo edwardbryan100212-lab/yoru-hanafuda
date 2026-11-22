@@ -375,7 +375,8 @@ body {
 
 /* captured cards sit on red felt (hi-mōsen) */
 .side .caps {
-  background: var(--sakura-mon), radial-gradient(ellipse at 30% 20%, var(--felt), var(--felt-deep));
+  background: var(--felt);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(0, 0, 0, .06));
   border-radius: 8px; padding: 8px 14px 10px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12), 0 8px 18px -10px rgba(60, 20, 10, .55);
 }
