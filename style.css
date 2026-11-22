@@ -333,60 +333,77 @@ svg { display: block; }
 .credit { margin: -8px 0 0; font-size: 12px; color: var(--ink-soft); }
 .credit a { color: inherit; }
 
-/* ---------- traditional room: tatami floor, red felt, woven mat ---------- */
-:root {
-  --tatami: #c3be8a;
-  --tatami-dark: #aaa673;
-  --heri: #3f4b3c;
-  --felt: #ad3b3b;
-  --felt-deep: #8e2f31;
-  --sakura-mon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='%23ffd9d4' fill-opacity='.16'%3E%3Cg transform='translate%2834 38%29 scale%281.1%29'%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%280%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%2872%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28144%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28216%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28288%29'/%3E%3C/g%3E%3Cg transform='translate%28104 100%29 scale%280.75%29'%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%280%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%2872%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28144%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28216%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28288%29'/%3E%3C/g%3E%3Cg transform='translate%28110 28%29 scale%280.5%29'%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%280%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%2872%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28144%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28216%29'/%3E%3Cpath d='M0 0C-5-3-6-9-3-12L0-10L3-12C6-9 5-3 0 0z' transform='rotate%28288%29'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
+/* ---------- traditional room: tatami floor, woven rug, red felt ---------- */
+/* Layout follows Clubhouse Games and Yakuza koi-koi tables: field as a 2-row grid with the pile on its
+   left, each player's captures as four piles (光 タネ 短冊 カス) on a cloth to the right. */
+:root { --felt: #ad3b3b; --felt-deep: #962f30; }
 body {
-  background-color: var(--tatami);
+  background-color: #c2bc86;
   background-image:
-    radial-gradient(ellipse 75% 65% at 50% 45%, rgba(255, 248, 215, .32), transparent 72%),
-    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(70, 60, 20, .22)),
-    repeating-linear-gradient(180deg, transparent 0 262px, rgba(0, 0, 0, .18) 262px 263px, var(--heri) 263px 271px, rgba(255, 255, 255, .12) 271px 272px),
-    repeating-linear-gradient(180deg, rgba(110, 100, 40, .13) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(90deg, rgba(110, 100, 40, .05) 0 1px, transparent 1px 26px),
-    linear-gradient(100deg, #c9c592, #bcb782 50%, #c6c08b);
+    radial-gradient(ellipse 80% 70% at 50% 45%, rgba(255, 248, 215, .18), transparent 70%),
+    radial-gradient(ellipse 130% 100% at 50% 50%, transparent 55%, rgba(50, 40, 15, .28)),
+    url("img/tatami.svg");
+  background-size: auto, auto, 560px 560px;
+  background-position: center, center, center top;
 }
 
-/* field: woven rug with fringed ends */
+/* cards: flat, crisp, small shadow that matches the square corners */
+.card { filter: none; border-radius: 2px; box-shadow: 0 1px 0 rgba(0, 0, 0, .35), 0 3px 6px -2px rgba(40, 25, 10, .45); }
+.card .art { border-radius: 2px; }
+.card.back { box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 4px -1px rgba(40, 25, 10, .35); }
+.my-hand .card.can { filter: none; }
+.my-hand .card.can::after { left: 50%; right: auto; width: 6px; height: 6px; bottom: auto; top: -11px; transform: translateX(-50%); border-radius: 50%; background: #f2c25a; box-shadow: 0 0 0 2px rgba(45, 38, 28, .55); }
+.my-hand .card.sel { filter: none; box-shadow: 0 0 0 3px #f2c25a, 0 10px 18px -6px rgba(40, 25, 10, .55); }
+.field .card.match { filter: none; outline: none; box-shadow: 0 0 0 3px #f2c25a, 0 6px 12px -4px rgba(40, 25, 10, .5); }
+.cap-row .card { filter: none; box-shadow: 0 1px 0 rgba(0, 0, 0, .35); }
+.title-cards .tc { filter: drop-shadow(0 6px 8px rgba(40, 25, 10, .3)); }
+
+/* sides: hand on the left, captures on a red cloth to the right */
+.side.opp { grid-template-columns: 1fr auto; grid-template-areas: "tag caps" "hand caps"; align-items: start; }
+.opp-hand { justify-content: flex-start; padding-left: calc(var(--cw) * .28); }
+.side.me { grid-template-columns: 1fr auto; grid-template-areas: "status caps" "hand caps" "tag caps"; justify-items: center; align-items: center; }
+.side .caps {
+  width: auto; min-width: calc(var(--capw) * 9.6 + 70px); min-height: calc(var(--capw) * 1.64 + 34px);
+  display: grid; grid-template-columns: repeat(4, minmax(calc(var(--capw) * 1.9), auto)); gap: 10px 14px; align-items: end; justify-content: start;
+  background: var(--felt); background-image: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(0, 0, 0, .07));
+  border-radius: 6px; padding: 10px 14px 12px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .14), 0 6px 14px -8px rgba(50, 20, 10, .6);
+}
+.me .caps { justify-content: start; align-self: end; }
+.cap-group.empty .lbl { opacity: .5; }
+.cap-row .slot { width: var(--capw); height: calc(var(--capw) * 1.64); border-radius: 2px; border: 1px dashed rgba(255, 230, 225, .35); }
+.cap-group { gap: 4px; }
+.cap-group .lbl { color: rgba(255, 240, 235, .9); font-size: 12px; }
+.cap-group .lbl em { color: #f6d68c; }
+.cap-row .card + .card { margin-left: calc(var(--capw) * -.72); }
+
+/* field: woven rug sized to its grid, fringed ends */
 .board {
-  position: relative;
-  border-radius: 6px;
+  justify-self: center; align-self: center; width: auto; position: relative;
+  grid-template-columns: auto auto auto; gap: 22px; padding: 18px 26px; border-radius: 4px;
   background:
-    repeating-linear-gradient(0deg, rgba(120, 60, 50, .07) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .08) 0 1px, transparent 1px 3px),
-    linear-gradient(125deg, #e7b9b2 0%, #e9c4ac 45%, #e3cf98 100%);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .35) inset, 0 14px 28px -14px rgba(60, 45, 20, .55);
-  margin: 0 14px;
+    repeating-linear-gradient(0deg, rgba(120, 60, 50, .06) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .07) 0 1px, transparent 1px 3px),
+    linear-gradient(125deg, #e4b7ae 0%, #e8c3aa 45%, #e1cd97 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .35) inset, 0 12px 26px -14px rgba(50, 35, 10, .6);
 }
 .board::before, .board::after {
-  content: ''; position: absolute; top: 4px; bottom: 4px; width: 12px; pointer-events: none;
-  background: repeating-linear-gradient(180deg, #ecd9c6 0 2px, transparent 2px 4px);
+  content: ''; position: absolute; top: 6px; bottom: 6px; width: 12px; pointer-events: none;
+  background: repeating-linear-gradient(180deg, #ebd8c4 0 2px, transparent 2px 4px);
 }
 .board::before { left: -11px; }
 .board::after { right: -11px; }
-.deck .count { color: var(--ink-soft); }
-.reach { background: rgba(255, 250, 242, .82); }
-
-/* captured cards sit on red felt (hi-mōsen) */
-.side .caps {
-  background: var(--felt);
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(0, 0, 0, .06));
-  border-radius: 8px; padding: 8px 14px 10px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12), 0 8px 18px -10px rgba(60, 20, 10, .55);
+.field {
+  display: grid; grid-template-rows: repeat(2, var(--ch)); grid-auto-flow: column; grid-auto-columns: var(--cw);
+  gap: calc(var(--cw) * .22) calc(var(--cw) * .2); min-height: 0; min-width: calc(var(--cw) * 6 + var(--cw) * .2 * 5);
+  justify-content: center; align-content: center;
 }
-.side .caps:empty::before { content: '取り札'; font-family: var(--font-jp); font-size: 13px; color: rgba(255, 230, 225, .55); align-self: center; }
-.cap-group .lbl { color: rgba(255, 240, 235, .85); }
-.cap-group .lbl em { color: #f6d68c; }
+.deck .count { color: var(--ink-soft); }
+.reach { background: rgba(255, 250, 242, .85); align-self: center; }
 
-/* labels on the floor get small dark pills, like scoreboards */
+/* labels sit on the floor in small dark pills */
 .player-tag, .round-info, .status:not(:empty) {
-  background: rgba(45, 38, 28, .62); color: #fbf4e4; border-radius: 999px; padding: 4px 12px;
+  background: rgba(45, 38, 28, .66); color: #fbf4e4; border-radius: 999px; padding: 4px 12px;
   backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
 }
 .player-tag { justify-self: start; }
@@ -396,3 +413,27 @@ body {
 .status:not(:empty) { color: rgba(251, 244, 228, .85); width: fit-content; justify-self: center; }
 .status [lang="ja"] { color: #f6d68c; }
 .badge { box-shadow: none; }
+
+@media (max-width: 900px) {
+  .side.opp { grid-template-columns: 1fr; grid-template-areas: "tag" "hand" "caps"; }
+  .side.me { grid-template-columns: 1fr; grid-template-areas: "caps" "status" "hand" "tag"; }
+  .side .caps { min-width: 0; width: 100%; grid-template-columns: repeat(4, 1fr); }
+  .field { min-width: 0; }
+}
+@media (max-width: 640px) {
+  .board { padding: 10px 12px; gap: 10px; }
+  .field { grid-template-rows: repeat(2, var(--ch)); }
+  .side .caps { padding: 6px 8px 8px; gap: 6px; }
+}
+.field { justify-content: start; }
+.emotes { right: auto; left: max(14px, env(safe-area-inset-left)); align-items: flex-start; }
+@media (max-width: 640px) {
+  .board { --cw: min(12.4vw, 7.4vh); --ch: calc(var(--cw) * 1.64); }
+  .field { grid-auto-flow: row; grid-template-rows: none; grid-auto-rows: calc(var(--cw) * 1.64); grid-template-columns: repeat(5, var(--cw)); min-width: 0; gap: 5px; }
+  #table { overflow-y: auto; grid-template-rows: auto auto minmax(min-content, 1fr) auto; }
+}
+.title-block { background: var(--cloth); border-radius: 18px; padding: 26px 28px 8px; box-shadow: 0 24px 50px -24px rgba(50, 35, 10, .45), 0 0 0 1px var(--line); }
+.title-cards { margin-top: -6px; }
+.en-title { color: #9a6a24; }
+.lobby-panel .link-btn + .link-btn { margin-top: -14px; }
+.jp-title { font-size: clamp(48px, 6.6vw, 92px); white-space: nowrap; }

@@ -270,11 +270,11 @@ function renderCaps(node, caps) {
   node.innerHTML = '';
   for (const k of GROUPS) {
     const ids = caps.filter((id) => CARDS[id].kind === k).sort((a, b) => a - b);
-    if (!ids.length) continue;
-    const g = el('div', 'cap-group');
+    const g = el('div', 'cap-group' + (ids.length ? '' : ' empty'));
     g.append(el('div', 'lbl', `${KIND_JP[k]}<em>${ids.length}</em>`));
     const row = el('div', 'cap-row');
     ids.forEach((id) => { const c = cardEl(id); c.tabIndex = -1; row.append(c); });
+    if (!ids.length) row.append(el('div', 'slot'));
     g.append(row);
     node.append(g);
   }
