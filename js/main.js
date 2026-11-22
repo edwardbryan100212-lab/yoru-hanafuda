@@ -1,4 +1,4 @@
-import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG } from './cards.js?v=4';
+import { CARDS, MONTHS, KIND_JP, KIND_EN, ID, cardSVG, BACK_SVG, preloadArt } from './cards.js?v=6';
 import { newMatch, applyAction, viewFor, computeYaku, yakuProgress, matchesIn, YAKU } from './engine.js';
 import { cpuAction } from './ai.js';
 import { hostRoom, joinRoom, cleanCode } from './net.js';
@@ -728,6 +728,7 @@ function initLobby() {
 }
 
 initLobby();
+preloadArt();
 
 // test hook
 window.__yh = { get state() { return state; }, get view() { return view; }, act, send, load: (s) => commit(s) };

@@ -1,5 +1,5 @@
 // Simple CPU opponent: greedy capture value plus yaku awareness.
-import { CARDS, ID } from './cards.js?v=4';
+import { CARDS, ID } from './cards.js?v=6';
 import { computeYaku, matchesIn } from './engine.js';
 
 const BASE = { bright: 20, animal: 9, ribbon: 6, chaff: 1 };

@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Yoru Hanafuda</title>
 <meta name="description" content="Koi-Koi hanafuda for two, in the browser. Play the house or a friend with a room code.">
-<meta name="theme-color" content="#23251a">
+<meta name="theme-color" content="#f6eee2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 96'%3E%3Crect width='60' height='96' rx='6' fill='%235e1914'/%3E%3Crect x='3' y='3' width='54' height='90' rx='4' fill='%23f3e9d3'/%3E%3Ccircle cx='30' cy='40' r='16' fill='%23c7362b'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=7">
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
 </head>
 <body>
@@ -70,6 +70,8 @@
         </section>
       </div>
       <button class="link-btn" id="guideBtnLobby"><svg><use href="#i-book"/></svg>How to play and yaku list</button>
+      <a class="link-btn" href="cards.html" target="_blank" rel="noopener"><svg><use href="#i-eye"/></svg>See all 48 cards</a>
+      <p class="credit">Card art by <a href="https://commons.wikimedia.org/wiki/Category:SVG_Hanafuda_with_traditional_colors_(red_border)" target="_blank" rel="noopener">Louie Mantia</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, colours softened.</p>
     </div>
 
     <div class="lobby-panel hidden" id="waitPanel">
@@ -127,6 +129,6 @@
 <div class="toast hidden" id="toast" role="status"></div>
 <div class="tip hidden" id="tip"></div>
 
-<script type="module" src="js/main.js?v=4"></script>
+<script type="module" src="js/main.js?v=7"></script>
 </body>
 </html>
